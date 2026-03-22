@@ -8,7 +8,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '30 8 * * 1-5'
-      
 
 jobs:
   test:
@@ -27,6 +26,14 @@ jobs:
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
+    - name: Debug env
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
+      run: |
+        echo "BASE_URL=$BASE_URL"
+        echo "AUTH_USERNAME=$AUTH_USERNAME"
 
     - name: Run Playwright tests
       env:
