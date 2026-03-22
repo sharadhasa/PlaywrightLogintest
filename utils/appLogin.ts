@@ -14,8 +14,8 @@ export async function getLoggedInPage(browser: Browser): Promise<Page> {
 
   await page.goto(process.env.BASE_URL!);
   await loginPage.login(
-    process.env.APP_USERNAME!,
-    process.env.APP_PASSWORD!
+    process.env.AUTH_USERNAME!,
+    process.env.AUTH_PASSWORD!
   );
 
   await expect(page).toHaveURL(/dashboard/);
