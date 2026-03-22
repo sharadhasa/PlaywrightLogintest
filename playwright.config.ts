@@ -32,7 +32,7 @@ export default defineConfig({
   //reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    storageState: 'playwright/.auth/auth.json',
+    //storageState: 'playwright/.auth/auth.json',
     baseURL: process.env.BASE_URL,
     headless: !!process.env.CI,
   screenshot: 'only-on-failure',
