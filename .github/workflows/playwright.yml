@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '30 8 * * 1-5'
-      timezone: "America/Los_Angeles"
+      
 
 jobs:
   test:
