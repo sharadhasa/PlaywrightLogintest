@@ -1,0 +1,32 @@
+{
+  "name": "playwright-ts-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {"test": "playwright test",
+  "test:order": "npx playwright test \"ninjapom/logincrm.spec.ts\" --project=chromium --workers=1 && npx playwright test \"ninjapom/Campaign.spec.ts\" --project=chromium --workers=1 && npx playwright test \"ninjapom/LoginAPI.spec.ts\" --project=chromium --workers=1 && npx playwright test \"ninjapom/CampaignAPI.spec.ts\" --project=chromium --workers=1 && echo \"All 4 tests completed successfully\"",
+  "test:smoke": "npx playwright test ninjapomv1 --project=chromium --workers=1",
+"test:main2": "playwright test \"API/LoginAPI.spec.ts\" \"API/CampaignAPI.spec.ts\" \"tests/logincrm.spec.ts\" \"tests/Campaign.spec.ts\" --project=chromium --workers=1",
+"test:main3": "npx playwright test tests/auth.setup.spec.ts && npx playwright test \"API/LoginAPI.spec.ts\" \"API/CampaignAPI.spec.ts\" \"tests/Logindup.spec.ts\" \"tests/Campaigndup.spec.ts\" --workers=1",
+"test:ordered": "playwright test \"tests/main-flow.spec.ts\" --project=chromium --workers=1 --headed",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report"},
+    
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3",
+    "allure-playwright": "^3.6.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
+
+
+
+
+
