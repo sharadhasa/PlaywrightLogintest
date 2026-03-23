@@ -1,10 +1,10 @@
-name: Playwright Tests
+name: Playwright UI Login Test
 
 on:
   workflow_dispatch:
 
 jobs:
-  test:
+  ui-test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
@@ -27,14 +27,12 @@ jobs:
           echo "AUTH_USERNAME=${{ secrets.AUTH_USERNAME }}" >> .env
           echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
 
-      - name: Check API connectivity
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
-          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
-        run: |
-          echo "Checking API..."
-          curl -v --max-time 15 -u "$AUTH_USERNAME:$AUTH_PASSWORD" "$BASE_URL/login"
+      - name: Run UI login test only
+        run: npx playwright test ninjapomv1/Loginv1.spec.ts --workers=1
 
-      - name: Run ONE test only
-        run: npx playwright test ninjapomv1/LoginAPIv1.spec.ts --workers=1
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-ui-login
+          path: playwright-report/
+          retention-days: 30
