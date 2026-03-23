@@ -4,7 +4,7 @@ import { invalidUsers } from '../test_data/apiData';
 
 test.describe('Login API Suite', () => {
 
-  // ✅ VALID LOGIN
+  //  VALID LOGIN
   test('Valid Login API', async () => {
     const apiContext = await getAPIContext();
 
@@ -21,7 +21,7 @@ test.describe('Login API Suite', () => {
     await apiContext.dispose();
   });
 
-  // ✅ INVALID LOGIN (DATA-DRIVEN)
+  //  INVALID LOGIN (DATA-DRIVEN)
   invalidUsers.forEach((user, index) => {
     test(`Invalid Login API - Scenario ${index + 1}`, async () => {
 
