@@ -15,7 +15,8 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './',
+  testDir: './ninjapomv1',
+   timeout: 60000,
    reporter: [
     ['html'],
     ['allure-playwright', { outputFolder: 'allure-results' }]
@@ -37,7 +38,9 @@ export default defineConfig({
     headless: !!process.env.CI,
   screenshot: 'only-on-failure',
   ignoreHTTPSErrors: true,
-  launchOptions: { slowMo: 3000 },
+  launchOptions: {
+      slowMo: process.env.CI ? 0 : 3000
+    },
    
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
