@@ -33,8 +33,14 @@ jobs:
           echo "AUTH_USERNAME=${{ secrets.AUTH_USERNAME }}" >> .env
           echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
 
-      - name: Debug env file
-        run: cat .env
+      - name: Check API connectivity
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
+          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
+        run: |
+          echo "Checking API reachability..."
+          curl -v --max-time 20 -u "$AUTH_USERNAME:$AUTH_PASSWORD" "$BASE_URL/login" || true
 
       - name: Run Playwright tests
         run: npx playwright test ninjapomv1 --workers=1
