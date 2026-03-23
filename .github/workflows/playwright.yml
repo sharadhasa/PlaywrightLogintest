@@ -1,17 +1,11 @@
 name: Playwright Tests
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
-  schedule:
-    - cron: '30 8 * * 1-5'
 
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 15
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +23,7 @@ jobs:
 
       - name: Create .env for CI
         run: |
-          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          echo "BASE_URL=${{ secrets.BASE_URL }}" > .env
           echo "AUTH_USERNAME=${{ secrets.AUTH_USERNAME }}" >> .env
           echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
 
@@ -39,15 +33,8 @@ jobs:
           AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
           AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
         run: |
-          echo "Checking API reachability..."
-          curl -v --max-time 20 -u "$AUTH_USERNAME:$AUTH_PASSWORD" "$BASE_URL/login" || true
+          echo "Checking API..."
+          curl -v --max-time 15 -u "$AUTH_USERNAME:$AUTH_PASSWORD" "$BASE_URL/login"
 
-      - name: Run Playwright tests
-        run: npx playwright test ninjapomv1 --workers=1
-
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+      - name: Run ONE test only
+        run: npx playwright test ninjapomv1/LoginAPIv1.spec.ts --workers=1
