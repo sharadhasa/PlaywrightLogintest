@@ -1,11 +1,17 @@
-name: Playwright UI Login Test
+name: Playwright Tests
 
 on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
+  schedule:
+    - cron: '30 8 * * 1-5'
 
 jobs:
-  ui-test:
-    timeout-minutes: 15
+  test:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
 
     steps:
@@ -27,12 +33,34 @@ jobs:
           echo "AUTH_USERNAME=${{ secrets.AUTH_USERNAME }}" >> .env
           echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
 
-      - name: Run UI login test only
-        run: npx playwright test ninjapomv1/Loginv1.spec.ts --workers=1
+      - name: Check application availability
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+        run: |
+          echo "Checking if app is reachable..."
+          curl -I --max-time 20 "$BASE_URL"
 
-      - uses: actions/upload-artifact@v4
+      - name: Clean old reports
+        run: |
+          rm -rf allure-results
+          rm -rf allure-report
+          rm -rf playwright-report
+
+      - name: Run Playwright tests
+        run: npx playwright test ninjapomv1 --workers=1
+
+      - name: Upload Playwright HTML Report
+        uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report-ui-login
+          name: playwright-report
           path: playwright-report/
+          retention-days: 30
+
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: allure-results
+          path: allure-results/
           retention-days: 30
