@@ -64,3 +64,4 @@ jobs:
           name: allure-results
           path: allure-results/
           retention-days: 30
+
