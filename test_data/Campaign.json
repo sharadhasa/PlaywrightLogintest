@@ -1,0 +1,36 @@
+{
+  "createCampaign": {
+    "campaignStatus": "Active",
+    "targetSize": 500,
+    "expectedCloseDate": "2026-04-30",
+    "targetAudience": "Retail Customers",
+    "description": "Created from Playwright"
+  },
+  "updateCampaign": {
+    "campaignStatus": "Completed",
+    "targetSize": 300,
+    "expectedCloseDate": "2026-05-15",
+    "targetAudience": "Updated Audience",
+    "description": "Updated from Playwright"
+  },
+
+"createContact": {
+    "contactName": "StaticContact",
+    "organization": "Org_Static",
+    "title": "QA",
+    "department": "QA",
+    "officePhone": "",
+    "mobile": "9876543210",
+    "email": "test@example.com"
+  },
+
+  "updateContact": {
+    "contactName": "UpdatedContact",
+    "organizationName": "Org_Updated",
+    "title": "Senior QA",
+    "department": "QA Team",
+    "officePhone": "1000000007",
+    "mobile": "9876543211",
+    "email": "updated@example.com"
+  }
+}
