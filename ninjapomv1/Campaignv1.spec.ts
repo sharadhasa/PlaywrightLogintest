@@ -1,4 +1,42 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/uiFixture';
+import { generateCampaignName, generateTargetSize } from '../utils/TestDataFaker';
+
+test.setTimeout(60000);
+
+test('Login -> Campaigns -> Create Campaign', async ({ campaignPage }) => {
+  const campaignName = generateCampaignName();
+  const targetSize = generateTargetSize().toString();
+
+  await campaignPage.createCampaign(campaignName, targetSize);
+
+  const campaignId = await campaignPage.getCreatedCampaignId();
+
+  expect(campaignId).toContain('CAM');
+  expect(campaignId).not.toBe('');
+
+  await campaignPage.searchCampaignById(campaignId);
+  await campaignPage.verifySearchedCampaignId(campaignId);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*import { test, expect } from '@playwright/test';
 import { getLoggedInPage } from '../utils/appLogin';
 import { CampaignPage } from '../pages/CampaignPage';
 import { generateCampaignName, generateTargetSize } from '../utils/TestDataHelper';
